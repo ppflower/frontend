@@ -1,0 +1,17 @@
+div {
+  margin-top: 3%;
+  background-color: aliceblue;
+  padding-top: 1%;
+  padding-bottom: 5%;
+}
+
+.form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.full-width {
+  height: 100px;
+  width: 100%;
+}

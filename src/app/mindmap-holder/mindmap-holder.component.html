@@ -1,0 +1,68 @@
+<mat-drawer mode="over" position="end" [opened]="routerActivated">
+  <button mat-flat-button (click)="closeEditPanel()">Close</button>
+  <router-outlet (activate)="routerActivated = true"
+                 (deactivate)="routerActivated = false"></router-outlet>
+</mat-drawer>
+
+<ng-container *ngIf="map$ | async as map; else bodyLoading">
+  <mat-list *ngIf="!isStudent()">
+    <mat-list-item>
+      <button mat-raised-button (click)="body.addSubIdea()">Add Child</button>
+      <button mat-raised-button (click)="body.addSiblingIdeaBefore()"
+              [disabled]="body.isRootSelected">Add Sibling</button>
+      <button mat-raised-button (click)="body.removeSubIdea()"
+              [disabled]="body.isRootSelected">Remove</button>
+      <button mat-raised-button [(colorPicker)]="selectedColor" [style.background]="selectedColor"
+              [style.color]="colorForeground(selectedColor)">
+        Node Color
+      </button>
+      <button mat-raised-button [(colorPicker)]="selectedForeGround" [style.background]="selectedForeGround"
+              [style.color]="colorForeground(selectedForeGround)">
+        Text Color
+      </button>
+      <button mat-raised-button (click)="body.undo()" [disabled]="!body.canUndo">Undo</button>
+      <button mat-raised-button (click)="body.redo()" [disabled]="!body.canRedo">Redo</button>
+      <button mat-raised-button (click)="saveManipulation()" color="primary"
+              [disabled]="!manipulations.length || saving">Save
+      </button>
+      <mat-spinner *ngIf="saving"></mat-spinner>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+  </mat-list>
+
+  <app-mindmap-body #body (manipulation)="mindmapEvent($event)" [map]="map"
+                    [editingEnabled]="!isStudent()"></app-mindmap-body>
+
+  <mat-list>
+    <mat-divider></mat-divider>
+    <ng-container *ngIf="attachments$ | async as attachments; else loading">
+      <app-attachment-display [attachmentList]="attachments.questions"
+                              (chooseItem)="edit('question', $event)"
+                              (newItem)="newItem('question')"
+                              [displayNewItem]="role == 'TEACHER'"
+                              [type]="'作业'"></app-attachment-display>
+      <mat-divider></mat-divider>
+      <app-attachment-display [attachmentList]="attachments.coursewares"
+                              (chooseItem)="getFile('courseware', $event)"
+                              (newItem)="newItem('courseware')"
+                              [displayNewItem]="newItemRequireSave"
+                              [type]="'课件'"></app-attachment-display>
+      <mat-divider></mat-divider>
+      <app-attachment-display [attachmentList]="attachments.resources"
+                              (chooseItem)="getFile('resource', $event)"
+                              (newItem)="newItem('resource')"
+                              [displayNewItem]="newItemRequireSave"
+                              [type]="'资源'"></app-attachment-display>
+    </ng-container>
+
+    <ng-template #loading>
+      <mat-list-item id="spinner-container">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      </mat-list-item>
+    </ng-template>
+  </mat-list>
+</ng-container>
+
+<ng-template #bodyLoading>
+  <mat-spinner></mat-spinner>
+</ng-template>

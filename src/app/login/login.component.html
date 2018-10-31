@@ -1,0 +1,25 @@
+<h1>登录</h1>
+
+<form class="form" (ngSubmit)="onSubmit()">
+  <mat-form-field class="full-width">
+    <input [(ngModel)]="email" name="email" matInput placeholder="邮箱">
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <input type="password" [(ngModel)]="password" name="password" matInput placeholder="密码">
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <mat-select [(ngModel)]="user" name="user" placeholder="身份">
+      <mat-option value="教师">教师</mat-option>
+      <mat-option value="学生">学生</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <button mat-raised-button type="submit" [disabled]="valid()">登录</button>
+  <button mat-raised-button>
+    <a href="https://github.com/login/oauth/authorize?client_id=18d8a971a997b63d74b7">github登录</a>
+  </button>
+
+  <button (click)="test233()">3423</button>
+</form>
