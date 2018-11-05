@@ -7,7 +7,7 @@
 }
 
 .button {
-  width: fit-content;
+  /*width: fit-content;*/
   color: white;
   float: right;
 }

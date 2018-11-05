@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from "@angular/router";
-import { CurrentUserService } from "../../current-user.service";
+import { ActivatedRoute, Router } from '@angular/router';
+import { CurrentUserService } from '../../current-user.service';
 
 @Component({
   selector: 'app-confirm-register',
@@ -9,8 +9,8 @@ import { CurrentUserService } from "../../current-user.service";
 })
 export class ConfirmRegisterComponent implements OnInit {
 
-  submitting: boolean = true;
-  error: boolean = false;
+  submitting = true;
+  error = false;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -27,10 +27,10 @@ export class ConfirmRegisterComponent implements OnInit {
         this.currentUser.confirmRegister(token)
           .subscribe(() => this.router.navigate(['/app/login'],
             { queryParams: { confirmRegistration: true } }),
-            () => this.error = true)
+            () => this.error = true);
       }
       this.submitting = false;
-    })
+    });
   }
 
 }

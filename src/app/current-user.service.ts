@@ -1,13 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
-import { RegisterForm, User } from './user';
-import get = require('lodash/get');
-import { BehaviorSubject, Observable, of, Subject } from "rxjs/index";
-import { map } from 'rxjs/operators'
-import { convert, sendFormData } from "./http-util";
-import { PartialObserver } from "rxjs/src/internal/types";
-import { RequestOptions } from "@angular/http";
-
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { User } from './user';
+import { BehaviorSubject, Observable } from 'rxjs/index';
+import { map } from 'rxjs/operators';
+import { sendFormData } from './http-util';
 const STORAGE_KEY = 'currentUser';
 
 @Injectable({
@@ -19,15 +15,16 @@ export class CurrentUserService {
   private loginUrl = '/login';
   private registerUrl = '/register';
   private logoutUrl = '/logout';
-  private changePasswordUrl = "/changePassword";
-  private confirmRegisterUrl = "/registrationConfirm";
+  private changePasswordUrl = '/changePassword';
+  private confirmRegisterUrl = '/registrationConfirm';
 
   private storage = window.sessionStorage;
 
   constructor(private http: HttpClient) {
     const userJson = this.storage.getItem(STORAGE_KEY);
-    if (userJson)
-      this._currentUser.next(JSON.parse(userJson))
+    if (userJson) {
+      this._currentUser.next(JSON.parse(userJson));
+    }
   }
 
   login(email, password): Observable<User> {
@@ -35,17 +32,17 @@ export class CurrentUserService {
       .pipe(map(user => {
         this._currentUser.next(user);
         this.storage.setItem(STORAGE_KEY, JSON.stringify(user));
-        return user
+        return user;
       }));
   }
 
   register(form): Observable<any> {
-    return sendFormData(this.registerUrl, form, this.http)
+    return sendFormData(this.registerUrl, form, this.http);
   }
 
   confirmRegister(token): Observable<any> {
     return this.http.get<User>(this.confirmRegisterUrl,
-      { params: new HttpParams().set('token', token) })
+      { params: new HttpParams().set('token', token) });
       // .pipe(map(user => {
       //   this._currentUser.next(user);
       //   this.storage.setItem(STORAGE_KEY, JSON.stringify(user));
@@ -58,8 +55,8 @@ export class CurrentUserService {
       .pipe(map(response => {
         this._currentUser.next(null);
         this.storage.removeItem(STORAGE_KEY);
-        return response
-      }))
+        return response;
+      }));
   }
 
   logout(): Observable<Response> {
@@ -67,20 +64,20 @@ export class CurrentUserService {
       .pipe(map((response: Response) => {
         this._currentUser.next(null);
         this.storage.removeItem(STORAGE_KEY);
-        return response
-      }))
+        return response;
+      }));
     // return of(null)
   }
 
   get currentUser(): Observable<User> {
-    return this._currentUser
+    return this._currentUser;
   }
 
   get currentUserRole(): 'STUDENT' | 'TEACHER' {
-    return this._currentUser.value.role
+    return this._currentUser.value.role;
   }
 
   subscribe(x) {
-    this._currentUser.subscribe(x)
+    this._currentUser.subscribe(x);
   }
 }

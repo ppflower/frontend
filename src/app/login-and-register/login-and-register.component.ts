@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute } from '@angular/router';
 import {Location} from '@angular/common';
 
 @Component({
@@ -9,7 +9,7 @@ import {Location} from '@angular/common';
 })
 export class LoginAndRegisterComponent implements OnInit {
 
-  tabIndex: number = 0;
+  tabIndex = 0;
 
   constructor(private route: ActivatedRoute,
               private location: Location) { }
@@ -21,7 +21,7 @@ export class LoginAndRegisterComponent implements OnInit {
   }
 
   indexChange(index) {
-    this.location.go(index == 0 ? '/app/login' : '/app/register')
+    this.location.go(index == 0 ? '/app/login' : '/app/register');
   }
 
 }

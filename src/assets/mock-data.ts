@@ -1,4 +1,4 @@
-import random = require('lodash/random')
+import random = require('lodash/random');
 
 export const mockData = {
   'GET /api/node/attachments/:id': {
@@ -26,7 +26,7 @@ export const mockData = {
       type: 'multipleChoice',
       content: '1 + 1 = ?',
       answers: {
-        a: "1",
+        a: '1',
         b: '2',
         c: '3',
       },
@@ -47,220 +47,220 @@ export const mockData = {
   'POST /api/homework/addSAA/:qid': true,
 
   'GET /api/node/getAll/:mapId': {
-    "id": 123,
+    'id': 123,
     internalId: 123,
-    "name": "rootNode",
-    "childNodes": [
+    'name': 'rootNode',
+    'childNodes': [
       {
-        "id": 158,
+        'id': 158,
         internalId: 158,
-        "name": "child1_2",
-        "childNodes": [],
-        "homeWork": [],
-        "coursewares": [],
-        "resources": []
+        'name': 'child1_2',
+        'childNodes': [],
+        'homeWork': [],
+        'coursewares': [],
+        'resources': []
       },
       {
-        "id": 159,
+        'id': 159,
         internalId: 159,
-        "name": "child1_3",
-        "childNodes": [],
-        "homeWork": [],
-        "coursewares": [],
-        "resources": []
+        'name': 'child1_3',
+        'childNodes': [],
+        'homeWork': [],
+        'coursewares': [],
+        'resources': []
       },
       {
-        "id": 160,
+        'id': 160,
         internalId: 160,
-        "name": "child1_4",
-        "childNodes": [],
-        "homeWork": [],
-        "coursewares": [],
-        "resources": []
+        'name': 'child1_4',
+        'childNodes': [],
+        'homeWork': [],
+        'coursewares': [],
+        'resources': []
       },
       {
-        "id": 133,
+        'id': 133,
         internalId: 133,
-        "name": "child1_1",
-        "childNodes": [
+        'name': 'child1_1',
+        'childNodes': [
           {
-            "id": 138,
+            'id': 138,
             internalId: 138,
             color: '#80ff80',
-            "name": "child2_1",
-            "childNodes": [
+            'name': 'child2_1',
+            'childNodes': [
               {
-                "id": 200,
+                'id': 200,
                 internalId: 200,
-                "name": "child3_2",
-                "childNodes": [],
-                "homeWork": [],
-                "coursewares": [],
-                "resources": []
+                'name': 'child3_2',
+                'childNodes': [],
+                'homeWork': [],
+                'coursewares': [],
+                'resources': []
               },
               {
-                "id": 201,
+                'id': 201,
                 internalId: 201,
-                "name": "child3_3",
-                "childNodes": [],
-                "homeWork": [],
-                "coursewares": [],
-                "resources": []
+                'name': 'child3_3',
+                'childNodes': [],
+                'homeWork': [],
+                'coursewares': [],
+                'resources': []
               },
               {
-                "id": 156,
+                'id': 156,
                 internalId: 156,
-                "name": "child3_1",
-                "childNodes": [],
-                "homeWork": [],
-                "coursewares": [],
-                "resources": []
+                'name': 'child3_1',
+                'childNodes': [],
+                'homeWork': [],
+                'coursewares': [],
+                'resources': []
               }
             ],
-            "homeWork": [],
-            "coursewares": [],
-            "resources": []
+            'homeWork': [],
+            'coursewares': [],
+            'resources': []
           }
         ],
-        "homeWork": [],
-        "coursewares": [],
-        "resources": []
+        'homeWork': [],
+        'coursewares': [],
+        'resources': []
       }
     ],
-    "homeWork": [],
-    "coursewares": [],
-    "resources": []
+    'homeWork': [],
+    'coursewares': [],
+    'resources': []
   },
 
   'POST /api/mindmap/manipulate/:mapId': {
-    "id": 123,
+    'id': 123,
     internalId: 123,
-    "name": "rootNode",
-    "childNodes": [
+    'name': 'rootNode',
+    'childNodes': [
       {
-        "id": 158,
+        'id': 158,
         internalId: 158,
-        "name": "child1_2",
-        "childNodes": [],
-        "homeWork": [],
-        "coursewares": [],
-        "resources": []
+        'name': 'child1_2',
+        'childNodes': [],
+        'homeWork': [],
+        'coursewares': [],
+        'resources': []
       },
       {
-        "id": 159,
+        'id': 159,
         internalId: 159,
-        "name": "child1_3",
-        "childNodes": [],
-        "homeWork": [],
-        "coursewares": [],
-        "resources": []
+        'name': 'child1_3',
+        'childNodes': [],
+        'homeWork': [],
+        'coursewares': [],
+        'resources': []
       },
       {
-        "id": 160,
+        'id': 160,
         internalId: 160,
-        "name": "child1_4",
-        "childNodes": [],
-        "homeWork": [],
-        "coursewares": [],
-        "resources": []
+        'name': 'child1_4',
+        'childNodes': [],
+        'homeWork': [],
+        'coursewares': [],
+        'resources': []
       },
       {
-        "id": 133,
+        'id': 133,
         internalId: 133,
-        "name": "child1_1",
-        "childNodes": [
+        'name': 'child1_1',
+        'childNodes': [
           {
-            "id": 138,
+            'id': 138,
             internalId: 138,
             color: '#80ff80',
-            "name": "child2_1",
-            "childNodes": [
+            'name': 'child2_1',
+            'childNodes': [
               {
-                "id": 200,
+                'id': 200,
                 internalId: 200,
-                "name": "child3_2",
-                "childNodes": [],
-                "homeWork": [],
-                "coursewares": [],
-                "resources": []
+                'name': 'child3_2',
+                'childNodes': [],
+                'homeWork': [],
+                'coursewares': [],
+                'resources': []
               },
               {
-                "id": 201,
+                'id': 201,
                 internalId: 201,
-                "name": "child3_3",
-                "childNodes": [],
-                "homeWork": [],
-                "coursewares": [],
-                "resources": []
+                'name': 'child3_3',
+                'childNodes': [],
+                'homeWork': [],
+                'coursewares': [],
+                'resources': []
               },
               {
-                "id": 156,
+                'id': 156,
                 internalId: 156,
-                "name": "child3_1",
-                "childNodes": [],
-                "homeWork": [],
-                "coursewares": [],
-                "resources": []
+                'name': 'child3_1',
+                'childNodes': [],
+                'homeWork': [],
+                'coursewares': [],
+                'resources': []
               }
             ],
-            "homeWork": [],
-            "coursewares": [],
-            "resources": []
+            'homeWork': [],
+            'coursewares': [],
+            'resources': []
           }
         ],
-        "homeWork": [],
-        "coursewares": [],
-        "resources": []
+        'homeWork': [],
+        'coursewares': [],
+        'resources': []
       },
       { id: 200, internalId: 202, name: 'newly added', childNodes: [] }
     ],
-    "homeWork": [],
-    "coursewares": [],
-    "resources": []
+    'homeWork': [],
+    'coursewares': [],
+    'resources': []
   },
 
   'GET /api/course/get': [
     {
-      "id": 122,
-      "name": "apue",
-      "maps": [
+      'id': 122,
+      'name': 'apue',
+      'maps': [
         {
-          "id": 168,
-          "name": "map3",
-          "rootNode": null
+          'id': 168,
+          'name': 'map3',
+          'rootNode': null
         },
         {
-          "id": 169,
-          "name": "map2",
-          "rootNode": null
+          'id': 169,
+          'name': 'map2',
+          'rootNode': null
         },
         {
-          "id": 167,
-          "name": "map1",
-          "rootNode": null
+          'id': 167,
+          'name': 'map1',
+          'rootNode': null
         }
       ]
     },
     {
-      "id": 120,
-      "name": "ooad",
-      "maps": [
+      'id': 120,
+      'name': 'ooad',
+      'maps': [
         {
-          "id": 176,
-          "name": "mp4",
-          "rootNode": null
+          'id': 176,
+          'name': 'mp4',
+          'rootNode': null
         }
       ]
     },
     {
-      "id": 125,
-      "name": "ics",
-      "maps": []
+      'id': 125,
+      'name': 'ics',
+      'maps': []
     },
     {
-      "id": 171,
-      "name": "sss",
-      "maps": []
+      'id': 171,
+      'name': 'sss',
+      'maps': []
     }
   ],
 

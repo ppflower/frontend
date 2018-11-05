@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from "@angular/router";
-import { LoginAndRegisterComponent } from "../login-and-register.component";
-import { AuthGuard } from "../../auth-guards";
-import { ModifyComponent } from "../modify/modify.component";
-import { ConfirmRegisterComponent } from "../confirm-register/confirm-register.component";
+import { RouterModule, Routes } from '@angular/router';
+import { LoginAndRegisterComponent } from '../login-and-register.component';
+import { AuthGuard } from '../../auth-guards';
+import { ModifyComponent } from '../modify/modify.component';
+import { ConfirmRegisterComponent } from '../confirm-register/confirm-register.component';
 
 const routes: Routes = [
   {

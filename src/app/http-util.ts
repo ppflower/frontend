@@ -1,11 +1,11 @@
-import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
-import { Observable } from "rxjs/index";
-import { catchError } from "rxjs/internal/operators";
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs/index';
+import { catchError } from 'rxjs/internal/operators';
 
 export function convert(data): HttpParams {
   let params = new HttpParams();
   Object.keys(data).map(k => {
-    params = params.append(k, data[k])
+    params = params.append(k, data[k]);
   });
   return params;
 }
@@ -17,7 +17,7 @@ export function sendFormData<T>(url, data, http: HttpClient): Observable<T> {
   }, new URLSearchParams());
   return http.post<T>(url, body.toString(), {
     headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
-  })
+  });
 }
 
 export function getOrError<T>(fun: () => Observable<T>,
@@ -25,7 +25,7 @@ export function getOrError<T>(fun: () => Observable<T>,
                               error: (any) => void) {
   return fun().pipe(catchError(err => {
     error(err);
-    return new Observable()
+    return new Observable();
   }))
-    .subscribe(success)
+    .subscribe(success);
 }
