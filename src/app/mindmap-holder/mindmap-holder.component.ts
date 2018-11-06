@@ -1,21 +1,21 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { MindmapEvent } from "../mindmap-body/mindmap-event";
-import { Attachments } from "./attachment";
-import { NodeService } from "./node.service";
-import { Observable } from "rxjs/index";
+import { MindmapEvent } from '../mindmap-body/mindmap-event';
+import { Attachments } from './attachment';
+import { NodeService } from './node.service';
+import { Observable } from 'rxjs';
 import {
   trigger,
   animate,
   transition
 } from '@angular/animations';
-import { Manipulation } from "./manipulation";
+import { Manipulation } from './manipulation';
 import remove = require('lodash/remove');
 import findLast = require('lodash/findLast');
 import get = require('lodash/get');
-import { MatSnackBar } from "@angular/material";
+import { MatSnackBar } from '@angular/material';
 import * as tinyColor from 'tinycolor2';
-import { ActivatedRoute, Router } from "@angular/router";
-import { CurrentUserService } from "../current-user.service";
+import { ActivatedRoute, Router } from '@angular/router';
+import { CurrentUserService } from '../current-user.service';
 import { saveAs } from 'file-saver';
 import camelCase = require('lodash/camelCase');
 
@@ -33,7 +33,7 @@ export class MindmapHolderComponent implements OnInit {
 
   attachments$: Observable<Attachments>;
   map$: Observable<any>;
-  _saving: boolean = false;
+  _saving = false;
 
   private _selectedColor;
   private _selectedForeGround;
@@ -42,7 +42,7 @@ export class MindmapHolderComponent implements OnInit {
   private mapId: number;
   private nodeId: number;
   private role: 'STUDENT' | 'TEACHER';
-  routerActivated: boolean = false;
+  routerActivated = false;
 
   constructor(private currentUser: CurrentUserService, private nodeService: NodeService,
               private snackBar: MatSnackBar,
@@ -62,33 +62,34 @@ export class MindmapHolderComponent implements OnInit {
   }
 
   isStudent() {
-    return this.currentUser.currentUserRole == 'STUDENT';
+    return this.currentUser.currentUserRole === 'STUDENT';
   }
 
   closeEditPanel() {
     // noinspection JSIgnoredPromiseFromCall
-    this.router.navigateByUrl(`/app/mindmap/${this.mapId}`)
+    this.router.navigateByUrl(`/app/mindmap/${this.mapId}`);
   }
 
   edit(type, item) {
     // noinspection JSIgnoredPromiseFromCall
     this.router.navigate([...this.getNavigationType(type, item)],
-      { relativeTo: this.route })
+      { relativeTo: this.route });
   }
 
   getFile(type, item) {
-    if (type == 'courseware' || type == 'resource' && item.type == 'FILE') {
+    if (type === 'courseware' || type === 'resource' && item.type === 'FILE') {
       this.nodeService.getFile(type, item.id).subscribe(data => {
-        saveAs(data, item.name)
-      })
-    } else
-      this.router.navigate(['resource', item.id], { relativeTo: this.route })
+        saveAs(data, item.name);
+      });
+    } else {
+      this.router.navigate(['resource', item.id], { relativeTo: this.route });
+    }
   }
 
   newItem(type) {
     // noinspection JSIgnoredPromiseFromCall
     this.router.navigate([...this.getNavigationType(type), 'new'],
-      { relativeTo: this.route })
+      { relativeTo: this.route });
   }
 
   getNavigationType(attachmentType, item?) {
@@ -96,33 +97,32 @@ export class MindmapHolderComponent implements OnInit {
     console.log(item);
     switch (attachmentType) {
       case 'question':
-        commands.push(this.role == 'TEACHER' ? 'question' : 'answer');
+        commands.push(this.role === 'TEACHER' ? 'question' : 'answer');
         break;
       default:
-        commands.push(attachmentType)
+        commands.push(attachmentType);
     }
-    if (item && item.type) commands.push(camelCase(item.type));
-    if (item) commands.push(item.id);
-    else commands.push(this.nodeId);
-    return commands
+    if (item && item.type) { commands.push(camelCase(item.type)); }
+    if (item) { commands.push(item.id); } else { commands.push(this.nodeId); }
+    return commands;
   }
 
   get selectedColor() {
-    return this._selectedColor
+    return this._selectedColor;
   }
 
   set selectedColor(c) {
     this.body.setIdeaColor(c);
-    this._selectedColor = c
+    this._selectedColor = c;
   }
 
   get selectedForeGround() {
-    return this._selectedForeGround
+    return this._selectedForeGround;
   }
 
   set selectedForeGround(c) {
     this.body.setIdeaColor(c, true);
-    this._selectedForeGround = c
+    this._selectedForeGround = c;
   }
 
   saveManipulation() {
@@ -131,16 +131,16 @@ export class MindmapHolderComponent implements OnInit {
       .subscribe(() => {
         this.saving = false;
         this.manipulations = [];
-        this.snackBar.open('Save complete')
-      })
+        this.snackBar.open('Save complete');
+      });
   }
 
   colorForeground(color) {
-    return tinyColor(color).isDark() ? 'white' : 'black'
+    return tinyColor(color).isDark() ? 'white' : 'black';
   }
 
   get saving() {
-    return this._saving
+    return this._saving;
   }
 
   set saving(value) {
@@ -153,12 +153,12 @@ export class MindmapHolderComponent implements OnInit {
 
     const insertDistinct = (value, action) => {
       const prev = findLast(this.manipulations, { id: e.id, action });
-      if (prev) prev.value = value;
-      else this.manipulations.push({
+      if (prev) { prev.value = value; } else { this.manipulations.push({
         action,
         id: e.id,
         value,
       });
+      }
     };
 
     switch (e.eventName) {
@@ -169,7 +169,7 @@ export class MindmapHolderComponent implements OnInit {
           this._selectedForeGround = this.body.selectedForeGround;
           this.nodeId = e.id;
           this.attachments$ = this.nodeService.getAttachments(e.id);
-          console.log(this.attachments$)
+          console.log(this.attachments$);
         });
         break;
       case 'nodeCreated':
@@ -182,18 +182,19 @@ export class MindmapHolderComponent implements OnInit {
           });
           // This manipulation could be undoing of a removal.
           // In that case, the node's other attributes should be restored as well.
-          if (e.event.title) insertDistinct(e.event.title, 'changeName');
+          if (e.event.title) { insertDistinct(e.event.title, 'changeName'); }
           const background = get(e.event, 'attr.style.background');
-          if (background) insertDistinct(background, 'changeColor');
+          if (background) { insertDistinct(background, 'changeColor'); }
         }
         break;
       case 'nodeRemoved':
         const creation = findLast(this.manipulations, { action: 'addNode', id: e.id });
         remove(this.manipulations, { id: e.id });
-        if (!creation) this.manipulations.push({
+        if (!creation) { this.manipulations.push({
           action: 'removeNode',
           id: e.id,
         });
+        }
         break;
       case 'nodeTitleChanged':
         insertDistinct(e.event.title, 'changeName');
@@ -208,30 +209,32 @@ export class MindmapHolderComponent implements OnInit {
         break;
       case 'parentNodeChanged':
         const prev = findLast(this.manipulations, ({ action, id }) =>
-          id == e.id && (action == 'addNode' || action == 'changeParent')
+          id === e.id && (action === 'addNode' || action === 'changeParent')
         );
-        if (prev) prev.parentId = e.parentId;
-        else this.manipulations.push({
+        if (prev) { prev.parentId = e.parentId; } else { this.manipulations.push({
           action: 'changeParent',
           id: e.id,
           parentId: e.parentId,
-        })
+        });
+        }
     }
-    console.log(this.manipulations)
+    console.log(this.manipulations);
   }
 
   get newItemRequireSave() {
-    return this.role != 'TEACHER' ? false :
-      (findLast(this.manipulations, { action: 'addNode', id: this.nodeId }) ? 'needSave' : true)
+    return this.role !== 'TEACHER' ? false :
+      (findLast(this.manipulations, { action: 'addNode', id: this.nodeId }) ? 'needSave' : true);
   }
 
   addSiblingIdeaBefore() {
-    if (!this.body.isRootSelected)
-      this.body.addSiblingIdeaBefore()
+    if (!this.body.isRootSelected) {
+      this.body.addSiblingIdeaBefore();
+    }
   }
 
   removeSubIdea() {
-    if (!this.body.isRootSelected)
-      this.body.removeSubIdea()
+    if (!this.body.isRootSelected) {
+      this.body.removeSubIdea();
+    }
   }
 }

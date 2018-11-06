@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { MultipleChoiceQuestion, ShortAnswerQuestion } from "./question";
-import { Observable } from "rxjs/internal/Observable";
-import { NodeService } from "../node.service";
-import { ActivatedRoute, Router } from "@angular/router";
-import { map, switchMap } from "rxjs/internal/operators";
+import { MultipleChoiceQuestion, ShortAnswerQuestion } from './question';
+import { Observable } from 'rxjs/internal/Observable';
+import { NodeService } from '../node.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { map, switchMap } from 'rxjs/internal/operators';
 
 @Component({
   selector: 'app-answer-question',
@@ -17,7 +17,7 @@ export class AnswerQuestionComponent implements OnInit {
   // type: string = 'multipleChoice';
   type: string;
   answer: string;
-  submitting: boolean = false;
+  submitting = false;
 
   // answer = this.question.answers;
   // content = this.question.content;
@@ -33,8 +33,8 @@ export class AnswerQuestionComponent implements OnInit {
       return this.nodeService.getQuestion(this.type, this.id).pipe(map(q => {
         this.answer = q.answer;
         return q;
-      }))
-    }))
+      }));
+    }));
   }
 
 
@@ -43,11 +43,12 @@ export class AnswerQuestionComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log('hhhh answer=' + this.answer + ';type=' + this.type);
     this.submitting = true;
     this.nodeService.answerQuestion(this.id, this.answer, this.type)
       .subscribe(() => {
         this.submitting = false;
-        this.router.navigate(['../../..'], { relativeTo: this.route })
-      })
+        this.router.navigate(['../../..'], { relativeTo: this.route });
+      });
   }
 }

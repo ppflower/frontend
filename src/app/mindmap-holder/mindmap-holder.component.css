@@ -12,6 +12,7 @@ mat-drawer {
   padding: 15px;
   width: auto;
   background-color: aliceblue;
+  /*border: 1px solid red;*/
 }
 
 

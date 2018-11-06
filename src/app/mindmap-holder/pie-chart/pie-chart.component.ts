@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
 import * as Highcharts from 'highcharts';
 import { chart } from 'highcharts';
-import { NodeService } from "../node.service";
+import { NodeService } from '../node.service';
 
 
 @Component({
@@ -13,7 +13,7 @@ export class PieChartComponent implements OnInit, AfterViewInit {
 
   // questionResult = mockData['GET /api/questionResult/:qid'];
   result;
-  loading: boolean = true;
+  loading = true;
 
   private componentInitResolve: Function;
   private componentInitPromise = new Promise(resolve => this.componentInitResolve = resolve);
@@ -29,8 +29,8 @@ export class PieChartComponent implements OnInit, AfterViewInit {
           this.loading = false;
           this.componentInitPromise.then(() => {
             this.initContent();
-          })
-        })
+          });
+        });
     }
   }
 
@@ -45,7 +45,7 @@ export class PieChartComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     console.log(this.chartTarget);
-    this.componentInitResolve()
+    this.componentInitResolve();
   }
 
   initContent() {
@@ -94,7 +94,7 @@ export class PieChartComponent implements OnInit, AfterViewInit {
       return {
         name: item,
         y: Number(this.result[item]),
-      }
+      };
     });
   }
 }

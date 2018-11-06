@@ -1,5 +1,5 @@
 <mat-drawer mode="over" position="end" [opened]="routerActivated">
-  <button mat-flat-button (click)="closeEditPanel()">Close</button>
+  <button mat-flat-button (click)="closeEditPanel()">关闭</button>
   <router-outlet (activate)="routerActivated = true"
                  (deactivate)="routerActivated = false"></router-outlet>
 </mat-drawer>
@@ -7,23 +7,23 @@
 <ng-container *ngIf="map$ | async as map; else bodyLoading">
   <mat-list *ngIf="!isStudent()">
     <mat-list-item>
-      <button mat-raised-button (click)="body.addSubIdea()">Add Child</button>
+      <button mat-raised-button (click)="body.addSubIdea()">添加子节点</button>
       <button mat-raised-button (click)="body.addSiblingIdeaBefore()"
-              [disabled]="body.isRootSelected">Add Sibling</button>
+              [disabled]="body.isRootSelected">添加兄弟节点</button>
       <button mat-raised-button (click)="body.removeSubIdea()"
-              [disabled]="body.isRootSelected">Remove</button>
+              [disabled]="body.isRootSelected">删除</button>
       <button mat-raised-button [(colorPicker)]="selectedColor" [style.background]="selectedColor"
               [style.color]="colorForeground(selectedColor)">
-        Node Color
+        节点颜色
       </button>
       <button mat-raised-button [(colorPicker)]="selectedForeGround" [style.background]="selectedForeGround"
               [style.color]="colorForeground(selectedForeGround)">
-        Text Color
+        文字颜色
       </button>
-      <button mat-raised-button (click)="body.undo()" [disabled]="!body.canUndo">Undo</button>
-      <button mat-raised-button (click)="body.redo()" [disabled]="!body.canRedo">Redo</button>
+      <button mat-raised-button (click)="body.undo()" [disabled]="!body.canUndo">撤销</button>
+      <button mat-raised-button (click)="body.redo()" [disabled]="!body.canRedo">重复</button>
       <button mat-raised-button (click)="saveManipulation()" color="primary"
-              [disabled]="!manipulations.length || saving">Save
+              [disabled]="!manipulations.length || saving">保存
       </button>
       <mat-spinner *ngIf="saving"></mat-spinner>
     </mat-list-item>

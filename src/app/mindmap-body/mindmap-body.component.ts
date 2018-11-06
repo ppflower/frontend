@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { init, testMap } from '../../assets/mapjs/mapjs-util'
-import { MindmapEvent } from "./mindmap-event";
+import { init, testMap } from '../../assets/mapjs/mapjs-util';
+import { MindmapEvent } from './mindmap-event';
 import { defaultColor, level1Color, foreGround, lightForeGround } from '../../assets/mapjs/theme';
 import * as tinyColor from 'tinycolor2';
 
@@ -31,7 +31,7 @@ export class MindmapBodyComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     // this._map = testMap;
     this._map = this.map;
-    console.log(this._map)
+    console.log(this._map);
   }
 
   ngAfterViewInit(): void {
@@ -41,13 +41,13 @@ export class MindmapBodyComponent implements OnInit, AfterViewInit {
       this.modelInitResolve();
       this.addManipulationListeners();
       this.addSelectionListener();
-      console.log(this.mapModel.getIdea())
-    })
+      console.log(this.mapModel.getIdea());
+    });
   }
 
   private addSelectionListener() {
     this.mapModel.addEventListener('nodeSelectionChanged', e => {
-      if (this.selectedNodeId != e) {
+      if (this.selectedNodeId !== e) {
         this.selectedNodeId = e;
         this.emitSelectionChanged();
       }
@@ -66,8 +66,8 @@ export class MindmapBodyComponent implements OnInit, AfterViewInit {
           event: e,
           id: e.id,
           parentId: this.mapModel.getIdea().findParent(e.id).id
-        })
-      })
+        });
+      });
     });
   }
 
@@ -75,12 +75,12 @@ export class MindmapBodyComponent implements OnInit, AfterViewInit {
     this.manipulation.emit({
       eventName: 'nodeSelectionChanged',
       id: this.selectedNodeId,
-    })
+    });
   }
 
   addSubIdea() {
     this.mapModel.addSubIdea();
-    console.log(this.mapModel.getIdea())
+    console.log(this.mapModel.getIdea());
   }
 
   addSiblingIdeaBefore() {
@@ -88,45 +88,45 @@ export class MindmapBodyComponent implements OnInit, AfterViewInit {
   }
 
   removeSubIdea() {
-    this.mapModel.removeSubIdea()
+    this.mapModel.removeSubIdea();
   }
 
   setIdeaColor(color, foreGround?) {
-    this.mapModel.updateStyle('angular', foreGround ? 'color' : 'background', color)
+    this.mapModel.updateStyle('angular', foreGround ? 'color' : 'background', color);
   }
 
   get selectedColor() {
     return this.mapModel.getSelectedStyle('background') ||
-      (this.rootIds.includes(this.selectedNodeId) ? level1Color : defaultColor)
+      (this.rootIds.includes(this.selectedNodeId) ? level1Color : defaultColor);
   }
 
   get selectedForeGround() {
     return this.mapModel.getSelectedStyle('color') ||
-      (tinyColor(this.selectedColor).isDark() ? lightForeGround : foreGround)
+      (tinyColor(this.selectedColor).isDark() ? lightForeGround : foreGround);
   }
 
   @Input() set editingEnabled(value: boolean) {
     this.modelInitPromise.then(() =>
-      this.mapModel.setEditingEnabled(value))
+      this.mapModel.setEditingEnabled(value));
   }
 
   undo() {
-    this.mapModel.undo()
+    this.mapModel.undo();
   }
 
   redo() {
-    this.mapModel.redo()
+    this.mapModel.redo();
   }
 
   get canUndo() {
-    return this.mapModel && this.mapModel.getIdea().canUndo()
+    return this.mapModel && this.mapModel.getIdea().canUndo();
   }
 
   get canRedo() {
-    return this.mapModel && this.mapModel.getIdea().canRedo()
+    return this.mapModel && this.mapModel.getIdea().canRedo();
   }
 
   get isRootSelected() {
-    return this.rootIds && this.rootIds.includes(this.selectedNodeId)
+    return this.rootIds && this.rootIds.includes(this.selectedNodeId);
   }
 }

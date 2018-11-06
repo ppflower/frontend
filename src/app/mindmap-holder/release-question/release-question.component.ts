@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { MultipleChoiceQuestion, ShortAnswerQuestion } from "../answer-question/question";
-import { Observable } from "rxjs/internal/Observable";
-import { map } from "rxjs/operators";
-import { ActivatedRoute, Router } from "@angular/router";
-import { NodeService } from "../node.service";
+import { MultipleChoiceQuestion, ShortAnswerQuestion } from '../answer-question/question';
+import { Observable } from 'rxjs/internal/Observable';
+import { map } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NodeService } from '../node.service';
 
 @Component({
   selector: 'app-release-question',
@@ -18,9 +18,9 @@ export class ReleaseQuestionComponent implements OnInit {
   // questionRouterType = 'multipleChoice';
   isModified: boolean;
   questionForm: FormGroup;
-  submitting: boolean = false;
+  submitting = false;
 
-  // choices = new FormArray([]);
+  shotAnswers: any;
 
   constructor(private fb: FormBuilder,
               private nodeService: NodeService,
@@ -40,15 +40,17 @@ export class ReleaseQuestionComponent implements OnInit {
       (group: FormGroup) => {
         const correct = group.controls['correct'];
         if ((group.controls['choices'] as FormArray).length <=
-          correct.value)
+          correct.value) {
           correct.setErrors({ 'correctNotAmongChoices': true });
-        return null
+        }
+        return null;
       }
     ]);
-    if (!this.qid)
+    if (!this.qid) {
       this.questionForm.addControl(
         'questionType',
-        new FormControl('multipleChoice'))
+        new FormControl('multipleChoice'));
+    }
   }
 
   ngOnInit() {
@@ -57,7 +59,13 @@ export class ReleaseQuestionComponent implements OnInit {
       this.questionRouterType = param.get('qType');
       this.qid = +param.get('qid');
       this.initFormControls();
-      if (this.qid) this.question$ = this.getQuestion();
+      if (this.qid) {
+        this.question$ = this.getQuestion();
+        this.nodeService.getShotAnswerAnswers(this.qid).subscribe(answers => {
+          this.shotAnswers = answers;
+          console.log(answers);
+        });
+      }
     });
   }
 
@@ -72,16 +80,17 @@ export class ReleaseQuestionComponent implements OnInit {
   private initFormControlValues(question) {
     this.content.setValue(question.content);
     console.log(question);
-    if (this.questionRouterType == 'multipleChoice') {
-      let answerKeys = this.getAnswerKeys(question);
+    if (this.questionRouterType === 'multipleChoice') {
+      const answerKeys = this.getAnswerKeys(question);
       this.questionForm.setControl('choices',
         new FormArray(answerKeys.map(k =>
           this.fb.group({ content: question.answers[k] } as Choice))));
-      const correctIndex = answerKeys.findIndex(x => x == question.correctAnswers);
+      const correctIndex = answerKeys.findIndex(x => x === question.correctAnswers);
       console.log(answerKeys, correctIndex);
       this.correct.setValue(correctIndex);
-    } else
+    } else {
       this.correct.setValue(question.correctAnswer);
+    }
   }
 
   onSubmit() {
@@ -91,19 +100,20 @@ export class ReleaseQuestionComponent implements OnInit {
       this.router.navigate(['../../..'], { relativeTo: this.route });
     };
     let formValue = this.questionForm.value;
-    formValue = formValue.questionType == 'multipleChoice' ?
+    formValue = formValue.questionType === 'multipleChoice' ?
       { ...formValue, choices: formValue.choices.map(c => c.content), }
       : { ...formValue, correctAnswer: formValue.correct };
     if (!this.qid) {
       this.nodeService.addQuestion(formValue)
         .subscribe(next);
-    } else
+    } else {
       this.nodeService.updateQuestion(this.qid, formValue, this.questionRouterType)
-        .subscribe(next)
+        .subscribe(next);
+    }
   }
 
   get content(): FormControl {
-    return this.questionForm.get('content') as FormControl
+    return this.questionForm.get('content') as FormControl;
   }
 
   get choices(): FormArray {

@@ -10,7 +10,7 @@
 
   <div *ngIf="questionType.value=='multipleChoice'" formArrayName="choices">
     <mat-form-field class="full-width">
-      <input matInput type="text" class="form-control" placeholder="请输入问题：" [formControl]="content">
+      <input matInput type="text" placeholder="请输入问题：" [formControl]="content">
     </mat-form-field>
     <br>
     <mat-list>
@@ -19,7 +19,7 @@
 
         <label style="display: inline">
           <mat-form-field>
-            <input matInput type="text" class="form-control" placeholder="Input choice content..." formControlName="content">
+            <input matInput type="text" placeholder="输入问题选项" formControlName="content">
           </mat-form-field>
         </label>
 
@@ -48,7 +48,7 @@
     <br>
 
     <mat-form-field class="full-width">
-      <textarea matInput placeholder="请输入问题正确答案：" [formControl]="correct"></textarea>
+      <textarea matInput placeholder="请输入问题标准答案：" [formControl]="correct"></textarea>
     </mat-form-field>
   </div>
 
@@ -82,8 +82,23 @@
         <mat-label>问题： {{question.content}}</mat-label>
         <br>
         &nbsp;&nbsp;&nbsp;&nbsp;
-        <mat-label>正确答案：</mat-label>
+        <mat-label>标准答案：</mat-label>
         <mat-label>{{question.correctAnswer}}</mat-label>
+        <br>
+
+        <!--添加所有回答-->
+        <div>
+          <p style="margin-top: 30px;">
+            &nbsp;&nbsp;&nbsp;
+            其他回答
+          </p>
+          <p style="margin-top: 10px; margin-bottom: 10px;" *ngFor="let answer of shotAnswers">
+            &nbsp;&nbsp;&nbsp;
+            {{answer['name']}}:{{answer['answer']}}<br>
+          </p>
+        </div>
+
+
       </div>
       <br>
       <button mat-raised-button color="primary" type="submit" class="btn btn-success">修改问题</button>

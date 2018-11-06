@@ -2,11 +2,11 @@ import { Component, Inject, Injectable, OnInit } from '@angular/core';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlattener, MatTreeFlatDataSource } from '@angular/material/tree';
 import { of as ofObservable, Observable, BehaviorSubject } from 'rxjs';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from "@angular/material";
-import { CourseService } from "./course.service";
-import remove = require('lodash/remove')
-import { ActivatedRoute, NavigationEnd, NavigationStart, Router } from "@angular/router";
-import { CurrentUserService } from "../../current-user.service";
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
+import { CourseService } from './course.service';
+import remove = require('lodash/remove');
+import { ActivatedRoute, NavigationEnd, NavigationStart, Router } from '@angular/router';
+import { CurrentUserService } from '../../current-user.service';
 
 
 /**
@@ -16,7 +16,7 @@ export class Node {
   children: Node[];
   name: string;
   id: number;
-  selected: boolean = false;
+  selected = false;
 }
 
 /** Flat to-do item node with expandable and level information */
@@ -45,7 +45,7 @@ export class CourseListDatabase {
     let counter = -1;
     return function () {
       return counter--;
-    }
+    };
   })();
 
   get data(): Node[] {
@@ -60,7 +60,7 @@ export class CourseListDatabase {
     //     file node as children,
     // And notify the change.
     this.dataChange.next(CourseListDatabase.buildFileTree(courses, 0));
-    this.resolveInitialize('ok')
+    this.resolveInitialize('ok');
   }
 
   /**
@@ -69,21 +69,21 @@ export class CourseListDatabase {
    */
   static buildFileTree(value: any, level: number) {
     const dataObject = value;
-    let data: any[] = [];
-    let rootNode = new Node();
-    rootNode.name = "所有课程";
+    const data: any[] = [];
+    const rootNode = new Node();
+    rootNode.name = '所有课程';
     rootNode.children = [];
-    for (let i in dataObject) {
-      let courseData = dataObject[i];
-      let courseNode = new Node();
-      courseNode.name = courseData["name"];
-      courseNode.id = courseData["id"];
+    for (const i in dataObject) {
+      const courseData = dataObject[i];
+      const courseNode = new Node();
+      courseNode.name = courseData['name'];
+      courseNode.id = courseData['id'];
       courseNode.children = [];
-      for (let j in courseData["maps"]) {
-        let mapData = courseData["maps"][j];
-        let mapNode = new Node();
-        mapNode.name = mapData["name"];
-        mapNode.id = mapData["id"];
+      for (const j in courseData['maps']) {
+        const mapData = courseData['maps'][j];
+        const mapNode = new Node();
+        mapNode.name = mapData['name'];
+        mapNode.id = mapData['id'];
         courseNode.children.push(mapNode);
       }
       rootNode.children.push(courseNode);
@@ -96,7 +96,7 @@ export class CourseListDatabase {
   insert(parent: Node, name: string, level: number) {
     console.log(level);
     const child = <Node>{ name: name, id: this.nextCount() };
-    if (level == 0) child.children = [];
+    if (level === 0) { child.children = []; }
     if (parent.children) {
       parent.children.push(child);
       this.dataChange.next(this.data);
@@ -113,18 +113,19 @@ export class CourseListDatabase {
     node.name = data.name;
     node.id = data.id;
     node.children = data.maps.map(map => {
-      return { id: map.id, name: map.name }
+      return { id: map.id, name: map.name };
     });
-    this.dataChange.next(this.data)
+    this.dataChange.next(this.data);
   }
 
   delete(node: Node, level: number) {
-    if (level == 1)
-      remove(this.data[0].children, n => n.id == node.id);
-    else
-      for (let course of this.data[0].children) {
-        if (remove(course.children, n => n.id == node.id).length) break
+    if (level === 1) {
+      remove(this.data[0].children, n => n.id === node.id);
+    } else {
+      for (const course of this.data[0].children) {
+        if (remove(course.children, n => n.id === node.id).length) { break; }
       }
+    }
     this.dataChange.next(this.data);
   }
 
@@ -133,22 +134,21 @@ export class CourseListDatabase {
     this.initialized.then(() => {
       console.log('complete!', id);
       if (this.selected) {
-        if (this.selected.id == id) return;
+        if (this.selected.id === id) { return; }
         this.selected.selected = false;
       }
-      if (!id) this.selected = null;
-      else {
+      if (!id) { this.selected = null; } else {
         let node;
-        for (let course of this.data[0].children) {
-          if (node = course.children.find(n => n.id == id)) {
+        for (const course of this.data[0].children) {
+          if (node = course.children.find(n => n.id === id)) {
             node.selected = true;
             this.selected = node;
-            break
+            break;
           }
         }
         this.dataChange.next(this.data);
       }
-    })
+    });
   }
 }
 
@@ -159,7 +159,7 @@ export class CourseListDatabase {
 })
 export class DeleteDialogComponent {
 
-  deleting: boolean = false;
+  deleting = false;
 
   constructor(public dialogRef: MatDialogRef<DeleteDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: Observable<any>) {
@@ -234,49 +234,49 @@ export class SidenavComponent implements OnInit {
 
     // this.route.firstChild could be at first not 'mindmap'
     // So we make a promise here which resolves until we find the mindmap child route
-    if (this.route.firstChild && this.route.firstChild.snapshot.url[0].path == 'mindmap')
+    if (this.route.firstChild && this.route.firstChild.snapshot.url[0].path === 'mindmap') {
       this.initMindmapRoute(this.route.firstChild);
-    else {
+    } else {
       const subscription = this.router.events.subscribe(e => {
         if (e instanceof NavigationEnd && this.router.isActive('/mindmap', false)) {
           console.log(this.route.firstChild);
           this.initMindmapRoute(this.route.firstChild);
-          subscription.unsubscribe()
+          subscription.unsubscribe();
         }
       });
     }
 
     this.mindmapRoute.then(route => route.paramMap.subscribe(params => {
       const id = params.get('mapId');
-      this.database.markSelected(id ? +id : null)
-    }))
+      this.database.markSelected(id ? +id : null);
+    }));
   }
 
   getLevel = (node: FlatNode) => {
     return node.level;
-  };
+  }
 
   isExpandable = (node: FlatNode) => {
     return node.expandable;
-  };
+  }
 
   getChildren = (node: Node): Observable<Node[]> => {
     return ofObservable(node.children);
-  };
+  }
 
   hasChild = (_: number, _nodeData: FlatNode) => {
     return _nodeData.expandable;
-  };
+  }
 
   hasNoContent = (_: number, _nodeData: FlatNode) => {
     return _nodeData.name === '';
-  };
+  }
 
   /**
    * Transformer to convert nested node to flat node. Record the nodes in maps for later use.
    */
   transformer = (node: Node, level: number) => {
-    let flatNode = this.nestedNodeMap.has(node) && this.nestedNodeMap.get(node)!.name === node.name
+    const flatNode = this.nestedNodeMap.has(node) && this.nestedNodeMap.get(node)!.name === node.name
       ? this.nestedNodeMap.get(node)!
       : new FlatNode();
     flatNode.name = node.name;
@@ -288,7 +288,7 @@ export class SidenavComponent implements OnInit {
     this.flatNodeMap.set(flatNode, node);
     this.nestedNodeMap.set(node, flatNode);
     return flatNode;
-  };
+  }
 
   /** Select the category so we can insert the new item. */
   addNode(node: FlatNode) {
@@ -297,26 +297,28 @@ export class SidenavComponent implements OnInit {
     const parentNode = this.flatNodeMap.get(node);
     this.database.insert(parentNode!, '', node.level);
     this.treeControl.expand(node);
-    if (!this.isTeacher())
+    if (!this.isTeacher()) {
       this.options = [];
+    }
     this.parentNodeId = node.id;
   }
 
   /** Save the node to database */
   saveNode(node: FlatNode, value: string) {
-    if (value != "") {
+    if (value !== '') {
       this.creating = 2;
       const next = ({ id, name }) => {
         this.creating = 0;
         const nestedNode = this.flatNodeMap.get(node);
         this.database.update(nestedNode!, name, id);
       };
-      if (node.level == 1)
+      if (node.level === 1) {
         this.courseService.addCourse(value).subscribe(next);
-      else
+      } else {
         this.courseService.addMindmap(this.parentNodeId, value)
-          .subscribe(next)
-    } else this.cancelAddNode(node)
+          .subscribe(next);
+      }
+    } else { this.cancelAddNode(node); }
   }
 
   selectCourse(node: FlatNode, id) {
@@ -325,13 +327,13 @@ export class SidenavComponent implements OnInit {
     this.courseService.selectCourse(id).subscribe(data => {
       this.creating = 0;
       const nestedNode = this.flatNodeMap.get(node);
-      this.database.updateFull(nestedNode, data)
-    })
+      this.database.updateFull(nestedNode, data);
+    });
   }
 
   cancelAddNode(node: FlatNode) {
     this.creating = 0;
-    this.deleteNode(node)
+    this.deleteNode(node);
   }
 
   deleteNode(node: FlatNode) {
@@ -342,14 +344,14 @@ export class SidenavComponent implements OnInit {
   openDialog(node: FlatNode, type: string): void {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       width: '250px',
-      data: type == 'course' ?
+      data: type === 'course' ?
         (this.isTeacher() ? this.courseService.deleteCourse(node.id) : this.courseService.deselectCourse(node.id))
         : this.courseService.deleteMindMap(node.id)
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
-      if (result == 1) this.deleteNode(node);
+      if (result === 1) { this.deleteNode(node); }
     });
   }
 
@@ -361,12 +363,12 @@ export class SidenavComponent implements OnInit {
   }
 
   canAdd(node: FlatNode) {
-    return this.currentUser.currentUserRole == 'TEACHER' ? true
-      : node.level == 0
+    return this.currentUser.currentUserRole === 'TEACHER' ? true
+      : node.level === 0;
   }
 
   isTeacher() {
-    return this.currentUser.currentUserRole == 'TEACHER'
+    return this.currentUser.currentUserRole === 'TEACHER';
   }
 
   inputChanged(value) {
@@ -375,6 +377,6 @@ export class SidenavComponent implements OnInit {
       .subscribe(v => {
         console.log(v);
         this.options = v;
-      })
+      });
   }
 }

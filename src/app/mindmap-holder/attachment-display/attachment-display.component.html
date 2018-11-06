@@ -8,7 +8,7 @@
     <mat-chip *ngIf="displayNewItem" (click)="newItemClicked()" [selected]="displayNewItem == true"
               [color]="'accent'">
       <mat-icon>add</mat-icon>
-      {{displayNewItem == true ? 'New Item' : 'Please save graph first'}}
+      {{displayNewItem == true ? '添加新项' : '请先保存思维导图'}}
     </mat-chip>
   </mat-chip-list>
 </mat-list-item>

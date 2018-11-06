@@ -18,10 +18,10 @@
           <div *ngIf="isTeacher()">
             <button mat-icon-button disabled></button>
             <mat-form-field>
-              <input matInput #itemValue placeholder="{{node.level == 1 ? '添加课程' : '添加Mindmap'}}">
+              <input matInput #itemValue placeholder="{{node.level == 1 ? '添加课程' : '添加思维导图'}}">
             </mat-form-field>
             <button mat-button (click)="saveNode(node, itemValue.value)">
-              {{itemValue.value ? 'Save' : 'Cancel'}}
+              {{itemValue.value ? '保存' : '取消'}}
             </button>
             <mat-spinner *ngIf="creating == 2"></mat-spinner>
           </div>

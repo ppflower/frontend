@@ -1,8 +1,8 @@
-import { Injectable } from "@angular/core";
-import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterStateSnapshot } from "@angular/router";
-import { Observable } from "rxjs/index";
-import { CurrentUserService } from "./current-user.service";
-import { map } from "rxjs/internal/operators";
+import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterStateSnapshot } from '@angular/router';
+import { Observable } from 'rxjs';
+import { CurrentUserService } from './current-user.service';
+import { map } from 'rxjs/internal/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -19,9 +19,9 @@ export class AuthGuard implements CanActivate, CanActivateChild {
         const noAuth = route.data['noAuth'];
         const check = noAuth ? !user : !!user;
         const redirect = noAuth ? '/app' : '/app/login';
-        if (check) return true;
+        if (check) { return true; }
         this.router.navigate([redirect]);
-        return false
+        return false;
       })
     );
   }
@@ -42,7 +42,7 @@ export class RoleGuard implements CanActivateChild {
 
   canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     return this.currentUser.currentUser.pipe(
-      map(user => user.role == childRoute.data['role'])
+      map(user => user.role === childRoute.data['role'])
     );
   }
 

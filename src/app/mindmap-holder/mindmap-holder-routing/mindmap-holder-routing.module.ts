@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from "@angular/router";
-import { MindmapHolderComponent } from "../mindmap-holder.component";
-import { AnswerQuestionComponent } from "../answer-question/answer-question.component";
-import { ReleaseQuestionComponent } from "../release-question/release-question.component";
-import { SidenavComponent } from "../sidenav/sidenav.component";
-import { AuthGuard, RoleGuard } from "../../auth-guards";
-import { UploadCourseComponent } from "../upload-course/upload-course.component";
-import { UploadResourceComponent } from "../upload-resource/upload-resource.component";
+import { RouterModule, Routes } from '@angular/router';
+import { MindmapHolderComponent } from '../mindmap-holder.component';
+import { AnswerQuestionComponent } from '../answer-question/answer-question.component';
+import { ReleaseQuestionComponent } from '../release-question/release-question.component';
+import { SidenavComponent } from '../sidenav/sidenav.component';
+import { AuthGuard, RoleGuard } from '../../auth-guards';
+import { UploadCourseComponent } from '../upload-course/upload-course.component';
+import { UploadResourceComponent } from '../upload-resource/upload-resource.component';
 
 const routes: Routes = [
   {

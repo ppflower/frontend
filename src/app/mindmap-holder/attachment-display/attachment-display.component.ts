@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { CourseWare, Question, Resource } from "../attachment";
+import { CourseWare, Question, Resource } from '../attachment';
 
 @Component({
   selector: 'app-attachment-display',
@@ -21,12 +21,13 @@ export class AttachmentDisplayComponent implements OnInit {
   }
 
   itemClicked(item) {
-    this.chooseItem.emit(item)
+    this.chooseItem.emit(item);
   }
 
   newItemClicked() {
-    if (this.displayNewItem == true)
-      this.newItem.emit()
+    if (this.displayNewItem === true) {
+      this.newItem.emit();
+    }
   }
 
 }
