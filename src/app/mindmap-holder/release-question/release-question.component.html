@@ -8,6 +8,7 @@
 
   <br>
 
+  <!--添加选择题的界面-->
   <div *ngIf="questionType.value=='multipleChoice'" formArrayName="choices">
     <mat-form-field class="full-width">
       <input matInput type="text" placeholder="请输入问题：" [formControl]="content">
@@ -40,6 +41,7 @@
     </button>
   </div>
 
+  <!--添加简答题的界面-->
   <div *ngIf="questionType.value=='shortAnswer'">
     <mat-form-field class="full-width">
       <input matInput type="text" class="form-control" placeholder="请输入问题：" [formControl]="content">
@@ -60,6 +62,7 @@
 <ng-container *ngIf="qid">
   <ng-container *ngIf="question$ | async as question; else loading">
 
+    <!--查看问题的界面-->
     <form *ngIf="!isModified" class="form" [formGroup]="questionForm" (ngSubmit)="modify()">
       <div *ngIf="questionRouterType=='multipleChoice'">
         &nbsp;&nbsp;&nbsp;&nbsp;
@@ -90,7 +93,7 @@
         <div>
           <p style="margin-top: 30px;">
             &nbsp;&nbsp;&nbsp;
-            其他回答
+            学生回答：
           </p>
           <p style="margin-top: 10px; margin-bottom: 10px;" *ngFor="let answer of shotAnswers">
             &nbsp;&nbsp;&nbsp;
@@ -105,17 +108,20 @@
     </form>
 
 
+    <!--修改问题的界面-->
     <form *ngIf="isModified" class="form" [formGroup]="questionForm" (ngSubmit)="onSubmit()">
+
+      <!--修改选择题的界面-->
       <div *ngIf="questionRouterType=='multipleChoice'" formArrayName="choices">
         <mat-form-field class="full-width">
-          <input matInput type="text" class="form-control" placeholder="请输入问题内容：" [formControl]="content">
+          <input matInput type="text" placeholder="请输入问题内容：" [formControl]="content">
         </mat-form-field>
         <br>
         <div *ngFor="let x of choices.controls; let i = index" [formGroupName]="i">
           <h5 style="display: inline">选项 {{i + 1}} :</h5>
           <mat-label style="display: inline">
             <mat-form-field>
-              <input matInput type="text" class="form-control" placeholder="输入选项内容：" formControlName="content">
+              <input matInput type="text" placeholder="输入选项内容：" formControlName="content">
             </mat-form-field>
           </mat-label>
 
@@ -135,7 +141,8 @@
         </button>
       </div>
 
-      <form class="full-width" *ngIf="questionRouterType=='shortAnswer'">
+      <!--修改简答题的界面-->
+      <div class="full-width" *ngIf="questionRouterType=='shortAnswer'">
         <mat-form-field class="full-width">
           <input matInput class="form-control" placeholder="请输入问题内容：" [formControl]="content">
         </mat-form-field>
@@ -144,7 +151,7 @@
         <mat-form-field class="full-width">
           <textarea matInput class="form-control" placeholder="请输入问题答案:" [formControl]="correct"></textarea>
         </mat-form-field>
-      </form>
+      </div>
 
       <br>
       <button mat-raised-button color="primary" type="submit" class="btn btn-success">提交问题</button>

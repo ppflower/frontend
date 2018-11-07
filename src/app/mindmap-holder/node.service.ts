@@ -121,8 +121,11 @@ export class NodeService {
 
   updateQuestion(id, questionForm, type): Observable<any> {
     if (this.cachedItem.has(id)) {
+      console.log('error');
       return of(Object.assign(this.cachedItem.get(id), questionForm));
     } else {
+      console.log(`${type === 'multipleChoice' ? this.updateChoiceUrl : this.updateAnswerUrl}/${id}`);
+      console.log(questionForm);
       return this.http.post(`${type === 'multipleChoice' ? this.updateChoiceUrl : this.updateAnswerUrl}/${id}`,
         questionForm);
     }
@@ -150,6 +153,7 @@ export class NodeService {
   addQuestion(questionForm): Observable<Question> {
     if (this.activeNodeMap.has(this.activeNodeId)) {
       const activeNodeId = this.activeNodeId;
+      console.log(questionForm); // todo delete
       return this.postObservable(questionForm, 'question', this.activeNodeMap.get(this.activeNodeId))
         .pipe(map(q => {
           if (this.activeAttachments && activeNodeId === this.activeNodeId) {

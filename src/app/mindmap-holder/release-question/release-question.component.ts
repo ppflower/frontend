@@ -100,13 +100,29 @@ export class ReleaseQuestionComponent implements OnInit {
       this.router.navigate(['../../..'], { relativeTo: this.route });
     };
     let formValue = this.questionForm.value;
-    formValue = formValue.questionType === 'multipleChoice' ?
-      { ...formValue, choices: formValue.choices.map(c => c.content), }
-      : { ...formValue, correctAnswer: formValue.correct };
+
+    console.log(formValue); // todo delete
+    console.log('formValue.questionType=' + formValue.questionType);
+    console.log('this.questionRouterType=' + this.questionRouterType);
+    console.log();
+
+    if (formValue.questionType) { // 添加问题
+      formValue = formValue.questionType === 'multipleChoice' ?
+          { ...formValue, choices: formValue.choices.map(c => c.content), }
+          : { ...formValue, correctAnswer: formValue.correct };
+    } else { // 修改问题
+      formValue = this.questionRouterType === 'multipleChoice' ?
+          { ...formValue, choices: formValue.choices.map(c => c.content), }
+          : { ...formValue, correctAnswer: formValue.correct };
+    }
+
+    console.log('check form value');
+    console.log(formValue); // todo delete
     if (!this.qid) {
       this.nodeService.addQuestion(formValue)
         .subscribe(next);
     } else {
+      console.log('********question-type:' + this.questionRouterType);
       this.nodeService.updateQuestion(this.qid, formValue, this.questionRouterType)
         .subscribe(next);
     }
